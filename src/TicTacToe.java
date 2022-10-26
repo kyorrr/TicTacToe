@@ -8,20 +8,23 @@ public class TicTacToe {
 
     public static void main(String[] args) {
 
-        char[][] gameBoard = {{' ', '|', ' ', '|', ' '},
+        char[][] gameBoard = {
+                {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
-                {' ', '|', ' ', '|', ' '}};
+                {' ', '|', ' ', '|', ' '}
+        };
 
         printGameBoard(gameBoard);
 
-        while(true){
+        while(true) {
             Scanner scan = new Scanner(System.in);
 
-            System.out.println("Введите ваше место (1-9):");
+            System.out.println("Введите ваше место (1-9): ");
+
             int playerPos = scan.nextInt();
-            while(playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)){
+            while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
                 System.out.println("Сюда нельзя. Поставь туда, где поле свободно");
                 playerPos = scan.nextInt();
             }
@@ -29,39 +32,37 @@ public class TicTacToe {
             placePiece(gameBoard, playerPos, "player");
 
             String result = checkWinner();
-            if(result.length() > 0) {
+            if (result.length() > 0) {
+                printGameBoard(gameBoard);
                 System.out.println(result);
                 break;
             }
 
             Random rand = new Random();
             int cpuPos = rand.nextInt(9) + 1;
-            while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)){
+            while (playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)) {
                 cpuPos = rand.nextInt(9) + 1;
             }
 
             placePiece(gameBoard, cpuPos, "cpu");
 
-            printGameBoard(gameBoard);
-
             result = checkWinner();
-            if(result.length() > 0){
+            if (result.length() > 0) {
+                printGameBoard(gameBoard);
                 System.out.println(result);
                 break;
             }
+            printGameBoard(gameBoard);
         }
-        printGameBoard(gameBoard);
     }
     public static void printGameBoard(char[][] gameBoard){
-        for(char[] row: gameBoard){
-            for(char c: row){
-                System.out.print(c);
+        for(char[] row: gameBoard){ //for(int i = 0; i < gameBoard.length; i++){
+           for(char column: row){ //for(int j = 4; j < gameBoard.length;j++){
+                System.out.print(column); //System.out.print(gameBoard[i]);
             }
             System.out.println();
         }
     }
-
-
     public static void placePiece(char[][] gameBoard, int pos, String user){
 
         char symbol = ' ';
@@ -88,7 +89,6 @@ public class TicTacToe {
             }
         }
     }
-
     public static String checkWinner() {
 
         List topRow = Arrays.asList(1, 2, 3);
@@ -115,7 +115,7 @@ public class TicTacToe {
                 return "Поздравляю вы победили";
             } else if(cpuPositions.containsAll(l)){
                 return "Компьютер победил";
-            } else if(playerPositions.size() + cpuPositions.size() == 9){
+            } else if(playerPositions.size() + cpuPositions.size() == 8){
                 return "Ничья";
             }
         }
